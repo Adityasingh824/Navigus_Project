@@ -75,6 +75,7 @@ app.post('/v1/subject/create',function(req,res){
       if(err){
           console.log(err);
       }else{
+          console.log("Hii");
           res.send(newCollection).status(200);
       }
   })

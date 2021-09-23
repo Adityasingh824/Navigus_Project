@@ -2,6 +2,9 @@ import React from 'react';
 import {Form,Button} from 'react-bootstrap';
 import {Route,Link} from 'react-router-dom';
 import axios from "axios";
+//import {useHistory} from 'react-router-dom';
+
+//let history = useHistory();
 
 class HomePage extends React.Component{
     constructor(){
@@ -39,14 +42,13 @@ class HomePage extends React.Component{
         userData['userEmail'] = this.state.email;
         userData['userType'] = this.state.role;
         userData['userPassword'] = this.state.password;
-        console.log(userData);
         axios.post('http://localhost:5000/v1/user',userData).then(res=>{
-        //   alert('Data send Successfully');
-          //browserHistory.push('/dashboard');
-        })
+            console.log(res);
+        });
     }
 
     render(){
+        console.log(this.props.history);
         return (
             <header className="App-header">
                 <Form>
