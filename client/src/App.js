@@ -1,6 +1,11 @@
 import React from 'react';
 import './App.css';
 import axios from "axios";
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import {Form,Button} from 'react-bootstrap';
+import {Route,Link} from 'react-router-dom';
+import HomePage from './HomePage'
+import LoginPage from './LoginPage'
 
 class App extends React.Component {
   constructor(){
@@ -38,22 +43,31 @@ class App extends React.Component {
     userData['userPassword'] = this.state.password;
     console.log(userData);
     axios.post('http://localhost:5000/v1/user',userData).then(res=>{
-      console.log(res);
+      alert('Data send Successfully');
     })
-
   }
   render() {
     console.log(this.state);
     return (
       <div className="App">
-        <header className="App-header">
-          <input type="text" name='name' value={this.state.name} placeholder="name" onChange={this.handleChange}/>
-          <input type="text" name='email' value={this.state.email} placeholder="email"  onChange={this.handleChange}/>
-          <input type="text" name='role' value={this.state.role} placeholder="role"  onChange={this.handleChange}/>
-          <input type="text" name='password' value={this.state.password} placeholder="password"  onChange={this.handleChange}/>
-          <button onClick = {this.handleSubmit}>Submit</button>
-  
-        </header>
+        <Route exact path='/' render={()=>(
+          <>
+            <h1 style={{textAlign:"center"}}>Welcome</h1>
+            <HomePage />
+          </>
+        )}/>
+        <Route exact path='/login' render={()=>(
+          <>
+            <h1 style={{textAlign:"center"}}>Welcome</h1>
+            <p style={{textAlign:"center"}}>Please Login</p>
+            <LoginPage />
+          </>
+        )}/>
+        <Route exact path='/dashboard' render={()=>(
+          <>
+            <h1 style={{textAlign:"center"}}>Welcome to Dashboard</h1>
+          </>
+        )}/>
       </div>
     );
   }
