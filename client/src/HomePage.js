@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form,Button} from 'react-bootstrap';
+import {Form,Button,Dropdown} from 'react-bootstrap';
 import {Route,Link} from 'react-router-dom';
 import axios from "axios";
 //import {useHistory} from 'react-router-dom';
@@ -42,9 +42,15 @@ class HomePage extends React.Component{
         userData['userEmail'] = this.state.email;
         userData['userType'] = this.state.role;
         userData['userPassword'] = this.state.password;
-        axios.post('http://localhost:5000/v1/user',userData).then(res=>{
-            console.log(res);
-        });
+        let request = {
+            method:'POST',
+            url:'http://localhost:5000/v1/user',
+            data:userData
+        }
+        axios(request).then(res=>{
+            this.props.history.push('/dashboard');
+        }).catch(e=>console.log(e));
+        this.props.history.push('/dashboard');
     }
 
     render(){
@@ -53,28 +59,24 @@ class HomePage extends React.Component{
             <header className="App-header">
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control type="text" name='name' value={this.state.name} placeholder="Enter name" onChange={this.handleChange} />
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control type="text" name='name' value={this.state.name} placeholder="Enter name" onChange={this.handleChange} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" name='email' value={this.state.email} placeholder="Enter email" onChange={this.handleChange} />
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text>
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control type="email" name='email' value={this.state.email} placeholder="Enter email" onChange={this.handleChange} />
+                        <Form.Text className="text-muted">
+                            We'll never share your email with anyone else.
+                        </Form.Text>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Role</Form.Label>
-                    <Form.Control type="text" name='role' value={this.state.role} placeholder="Enter role" onChange={this.handleChange} />
+                        <Form.Label>Role</Form.Label>
+                        <Form.Control type="text" name='role' value={this.state.role} placeholder="Enter role" onChange={this.handleChange} />
                     </Form.Group>
-
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" name='password' value={this.state.password} placeholder="Password" onChange={this.handleChange} />
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" name='password' value={this.state.password} placeholder="Password" onChange={this.handleChange} />
                     </Form.Group>
-                    {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                    </Form.Group> */}
                     <Button variant="primary" type="submit" onClick = {this.handleSubmit}>
                     Submit
                     </Button>
