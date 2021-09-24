@@ -38,18 +38,30 @@ const subjectSchema= new mongoose.Schema({
         type:String,
         required:true
     },
-    subjectQuestions:{
-        type:Object,
-    },
-    subjectAnswers:{
-        type:Object,
-    },
+    // subjectQuestions:{
+    //     type:Object,
+    // },
+    // subjectAnswers:{
+    //     type:Object,
+    // },
 
 });
 
 const User = new mongoose.model("User",userSchema);
 const Subject = new mongoose.model("Subject",subjectSchema);
 
+app.get('/v1/subject', (req, res) => {
+    Subject.find({},function (err, subjects){
+        if(err){
+          console.log(err);
+        }else{
+          if(subjects.length>0)
+          {
+            res.json(subjects);
+          }
+        }
+    })
+  });
 
 app.get('/v1/user', (req, res) => {
   User.find({},function (err, users){
@@ -68,8 +80,8 @@ app.post('/v1/subject/create',function(req,res){
   const newCollection = new Subject
   ({
       subjectName:req.body.subjectName,
-      subjectQuestions:req.body.subjectQuestions,
-      subjectAnswers:req.body.subjectAnswers
+    //   subjectQuestions:req.body.subjectQuestions,
+    //   subjectAnswers:req.body.subjectAnswers
   })
   newCollection.save(function(err){
       if(err){
@@ -93,40 +105,11 @@ app.post('/v1/user',function(req,res){
         if(err){
             console.log(err);
         }else{
+            //res.send('Hii Boy');
             res.send(newCollection).status(200);
         }
     })
   });
-
-// app.get('/v1/attributes/:id', (req, res) => {
-//   const id_=req.params.id;
-//   Attribute.findById(id_, (err, attribute) => {
-//       if(err){
-//         console.log(err);
-//       }else{
-//         if(attribute)
-//         {
-//           res.json(attribute);
-//         }
-//       }
-//   })
-// });
-
-// app.patch('/v1/attributes/:id',function(req,res){
-//   const id_=req.params.id;
-//   const update=req.body;
-//   console.log(update);
-//   Attribute.findByIdAndUpdate(id_,update,{new:true},function(err){
-//     if(err){
-//       console.log(err);
-//     }else{
-//       res.send("All is updated").status(200);
-//     }
-//   })
-// })
-
-
-
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
