@@ -6,6 +6,7 @@ import {Form,Button} from 'react-bootstrap';
 import {Route,Link} from 'react-router-dom';
 import HomePage from './HomePage'
 import LoginPage from './LoginPage'
+import DashBoard from './DashBoard'
 
 class App extends React.Component {
   constructor(){
@@ -66,6 +67,7 @@ class App extends React.Component {
         <Route exact path='/dashboard' render={()=>(
           <>
             <h1 style={{textAlign:"center"}}>Welcome to Dashboard</h1>
+            <DashBoard />
           </>
         )}/>
       </div>
