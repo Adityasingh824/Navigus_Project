@@ -109,7 +109,19 @@ app.post('/v1/user',function(req,res){
             res.send(newCollection).status(200);
         }
     })
-  });
+});
+
+app.delete('/v1/subject/delete/:id',function(req,res){
+  Subject.findByIdAndDelete(req.params.id).then((subject) => {
+    if (!subject) {
+        return res.status(404).send();
+    }
+    res.send(subject);
+  }).catch((error) => {
+      res.status(500).send(error);
+  })
+})
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
