@@ -33,7 +33,15 @@ class DashBoard  extends React.Component{
         }
     }
     componentDidMount(){
-      this.setState({isTeacher:true});
+      let queryParams = new URLSearchParams(window.location.search);
+      let isTeacher = queryParams.get('isTeacher');
+      let name = queryParams.get('name');
+      if(isTeacher == '1'){
+        this.setState({isTeacher:true,name:name});
+      }else{
+        this.setState({isTeacher:false,name:name});
+      }
+
       this.fetchSubjects();
     }
     fetchSubjects(){
@@ -90,7 +98,7 @@ class DashBoard  extends React.Component{
       let subjects = this.state.subjects;
         return (
             <div>
-              
+              <h1 style={{textAlign:"center"}}>{`Welcome ${this.state.name}`}</h1>
               {this.state.isTeacher == true && <Button variant="secondary" onClick={this.handleAdd}>Add</Button>}
               {this.state.addSubject &&
                 <header className="DashBoard-header">

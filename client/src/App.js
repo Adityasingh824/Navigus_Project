@@ -58,16 +58,15 @@ class App extends React.Component {
             <HomePage history={history}/>
           </>
         )}/>
-        <Route exact path='/login' render={()=>(
+        <Route exact path='/login' render={({history})=>(
           <>
             <h1 style={{textAlign:"center"}}>Welcome</h1>
             <p style={{textAlign:"center"}}>Please Login</p>
-            <LoginPage />
+            <LoginPage history={history}/>
           </>
         )}/>
         <Route exact path='/dashboard' render={()=>(
           <>
-            <h1 style={{textAlign:"center"}}>Welcome to Dashboard</h1>
             <DashBoard />
           </>
         )}/>

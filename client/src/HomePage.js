@@ -42,15 +42,17 @@ class HomePage extends React.Component{
         userData['userEmail'] = this.state.email;
         userData['userType'] = this.state.role;
         userData['userPassword'] = this.state.password;
+        let isTeacher = this.state.role == 'Teacher' ? 1 : 0;
         let request = {
             method:'POST',
             url:'http://localhost:5000/v1/user',
             data:userData
         }
         axios(request).then(res=>{
-            this.props.history.push('/dashboard');
+            if(res.data){
+                this.props.history.push(`/dashboard/?isTeacher=${isTeacher}&name=${this.state.name}`);
+            }
         }).catch(e=>console.log(e));
-        this.props.history.push('/dashboard');
     }
 
     render(){
@@ -77,7 +79,7 @@ class HomePage extends React.Component{
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" name='password' value={this.state.password} placeholder="Password" onChange={this.handleChange} />
                     </Form.Group>
-                    <Button variant="primary" type="submit" onClick = {this.handleSubmit}>
+                    <Button variant="primary" onClick = {this.handleSubmit}>
                     Submit
                     </Button>
                     <p>Already Have an Account? <Link to='/login'>Login</Link></p>

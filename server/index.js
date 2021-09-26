@@ -63,15 +63,14 @@ app.get('/v1/subject', (req, res) => {
     })
   });
 
-app.get('/v1/user', (req, res) => {
-  User.find({},function (err, users){
+app.post('/v1/user/login', (req, res) => {
+  console.log(req.body);
+  User.findOne({userEmail:req.body.userEmail},function (err, user){
+    console.log(user);
       if(err){
         console.log(err);
       }else{
-        if(users.length>0)
-        {
-          res.json(users);
-        }
+          res.json(user);
       }
   })
 });
@@ -109,6 +108,17 @@ app.post('/v1/user',function(req,res){
             res.send(newCollection).status(200);
         }
     })
+});
+
+app.get('/v1/user',function(req,res){
+  newCollection.save(function(err){
+      if(err){
+          console.log(err);
+      }else{
+          //res.send('Hii Boy');
+          res.send(newCollection).status(200);
+      }
+  })
 });
 
 app.delete('/v1/subject/delete/:id',function(req,res){
